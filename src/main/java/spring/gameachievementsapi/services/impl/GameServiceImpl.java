@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 @Service
 public class GameServiceImpl implements GameService {
 
-    private Logger logger= LogManager.getLogger(GameServiceImpl.class.getName());
+    private final Logger logger= LogManager.getLogger(GameServiceImpl.class.getName());
     private final GameRepository gameRepository;
 
     public GameServiceImpl(GameRepository gameRepository) {
