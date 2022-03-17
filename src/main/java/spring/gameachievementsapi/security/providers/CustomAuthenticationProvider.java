@@ -21,7 +21,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String authenticationKey= authentication.getName();
-        logger.info("The key: "+ authenticationKey);
+        logger.warning("The key: "+ authenticationKey);
 
         if(authenticationKey.equals(key))
             return new CustomAuthentication(null, null, null);

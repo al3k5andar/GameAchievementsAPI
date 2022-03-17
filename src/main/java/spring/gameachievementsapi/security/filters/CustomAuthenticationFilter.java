@@ -1,5 +1,6 @@
 package spring.gameachievementsapi.security.filters;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -13,12 +14,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.logging.Logger;
 
+@Slf4j
 @Component
 public class CustomAuthenticationFilter extends OncePerRequestFilter {
-
-    private Logger logger= Logger.getLogger(CustomAuthenticationFilter.class.getName());
 
     private final AuthenticationManager authenticationManager;
 
@@ -27,12 +26,14 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
+    public void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        logger.info("Searching for authorization!!!");
+        log.error("Searching for authorization!!!");
 
         String theKey= request.getHeader("Authorization");
+
+        log.info("Key: "+ theKey);
 
         var authentication= new CustomAuthentication(theKey, null);
 
@@ -53,6 +54,6 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return !request.getServletPath().equals("/h2-console/**");
+        return request.getServletPath().equals("/h2-console");
     }
 }
